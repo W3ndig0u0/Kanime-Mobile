@@ -63,6 +63,7 @@ class GogoWebScraper
 
           if (linkNodes != null)
           {
+            int counter = 1;
             foreach (IWebElement linkNode in linkNodes)
             {
               string link = linkNode.GetAttribute("href");
@@ -75,9 +76,18 @@ class GogoWebScraper
 
               videoUrls.Add(link);
 
-              Console.WriteLine(downloadText + " : " + link);
+              Console.ForegroundColor = ConsoleColor.Yellow;
+              Console.Write($"{counter}. ");
+              Console.ForegroundColor = ConsoleColor.Cyan;
+              Console.Write(downloadText);
+              Console.ForegroundColor = ConsoleColor.White;
+              Console.Write(" : ");
+              Console.ForegroundColor = ConsoleColor.Green;
+              Console.WriteLine(link);
+              counter++;
             }
           }
+
         }
 
         Console.WriteLine("File Size: " + fileSize);

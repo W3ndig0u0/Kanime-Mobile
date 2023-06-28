@@ -7,48 +7,30 @@ class Program
     GogoWebScraper scraper = new GogoWebScraper();
     var videoUrls = scraper.StreamingUrlFinder();
 
-    if (videoUrls.Count == 0)
+    int selectedOption;
+    do
     {
-      Console.WriteLine("No video URLs found.");
-    }
-    else
-    {
-      Console.WriteLine("Choose a video URL to download:");
+      Console.Write("Enter the number of the video URL to download (0 to exit): ");
+      string input = Console.ReadLine();
 
-      for (int i = 0; i < videoUrls.Count; i++)
+      if (int.TryParse(input, out selectedOption))
       {
-        Console.WriteLine($"{i + 1}. {videoUrls[i]}");
+        if (selectedOption >= 1 && selectedOption <= videoUrls.Count)
+        {
+          break;
+        }
+        else if (selectedOption == 0)
+        {
+          Console.WriteLine("Exiting...");
+          return;
+        }
       }
 
-      int selectedOption;
-      do
-      {
-        Console.Write("Enter the number of the video URL to download (0 to exit): ");
-        string input = Console.ReadLine();
+      Console.WriteLine("Invalid input. Please try again.");
+    } while (true);
 
-        if (int.TryParse(input, out selectedOption))
-        {
-          if (selectedOption >= 1 && selectedOption <= videoUrls.Count)
-          {
-            break;
-          }
-          else if (selectedOption == 0)
-          {
-            Console.WriteLine("Exiting...");
-            return;
-          }
-        }
+    string selectedVideoUrl = videoUrls[selectedOption - 1];
 
-        Console.WriteLine("Invalid input. Please try again.");
-      } while (true);
-
-      string selectedVideoUrl = videoUrls[selectedOption - 1];
-
-      VideoDownloader.Download(selectedVideoUrl).Wait();
-    }
-
-    // Wait for user input before exiting (optional)
-    Console.WriteLine("Press any key to exit...");
-    Console.ReadKey();
+    VideoDownloader.Download(selectedVideoUrl).Wait();
   }
 }
