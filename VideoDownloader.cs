@@ -74,13 +74,13 @@ class VideoDownloader
     int completedWidth = (int)(progressPercentage * ProgressBarWidth);
     int remainingWidth = ProgressBarWidth - completedWidth;
 
-    Console.Write("\u2588"); // Start character
+    Console.Write("\u2588");
     Console.ForegroundColor = ConsoleColor.Green;
-    Console.Write(new string('\u2588', completedWidth)); // Filled part
+    Console.Write(new string('\u2588', completedWidth));
     Console.ForegroundColor = ConsoleColor.Gray;
-    Console.Write(new string('\u2591', remainingWidth)); // Remaining part
+    Console.Write(new string('\u2591', remainingWidth));
     Console.ForegroundColor = ConsoleColor.White;
-    Console.Write("\u2588"); // End character
+    Console.Write("\u2588");
 
     Console.Write(" ");
     Console.ForegroundColor = ConsoleColor.Cyan;
@@ -93,7 +93,7 @@ class VideoDownloader
     string totalSize = FormatSize(total);
     Console.Write($"{downloadedSize} / {totalSize}");
 
-    Console.CursorLeft = 0; // Move the cursor back to the start of the line
+    Console.CursorLeft = 0;
   }
 
   private static string FormatSize(long bytes)

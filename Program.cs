@@ -6,8 +6,13 @@ class Program
   {
     GogoWebScraper scraper = new GogoWebScraper();
     var videoUrls = scraper.StreamingUrlFinder();
+    if (videoUrls == null)
+    {
+      return;
+    }
 
     int selectedOption;
+
     do
     {
       Console.Write("Enter the number of the video URL to download (0 to exit): ");
