@@ -2,12 +2,15 @@ using System;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using System.Collections.Generic;
 using System.Threading;
 
 class GogoWebScraper
 {
-  public void Downloader()
+  public List<string> StreamingUrlFinder()
   {
+    List<string> videoUrls = new List<string>();
+
     string baseUrl = "https://gogoanime.hu/";
     string id = "kimetsu-no-yaiba-katanakaji-no-sato-hen";
     string episode = "1";
@@ -26,12 +29,12 @@ class GogoWebScraper
         if (videoNode == null)
         {
           Console.WriteLine("Video not found");
-          return;
+          return videoUrls;
         }
 
         string videoUrl = videoNode.GetAttribute("data-video");
-        string streamingUrl = $"{videoUrl.Replace("streaming.php", "download")}";
 
+        string streamingUrl = $"{videoUrl.Replace("streaming.php", "download")}";
         driver.Navigate().GoToUrl(streamingUrl);
 
         IList<IWebElement> downloadDivs = WaitForElements(driver, By.ClassName("dowload"), TimeSpan.FromSeconds(2000));
@@ -42,13 +45,13 @@ class GogoWebScraper
         if (downloadDivs.Count == 0)
         {
           Console.WriteLine("Download Links not found");
-          return;
+          return videoUrls;
         }
 
         if (fileSizeNode == null || durationNode == null)
         {
           Console.WriteLine("filesize or duration not found");
-          return;
+          return videoUrls;
         }
 
         string fileSize = fileSizeNode.Text;
@@ -70,6 +73,8 @@ class GogoWebScraper
                 continue;
               }
 
+              videoUrls.Add(link);
+
               Console.WriteLine(downloadText + " : " + link);
             }
           }
@@ -83,6 +88,8 @@ class GogoWebScraper
     {
       Console.WriteLine($"Failed to retrieve video information: {e.Message}");
     }
+
+    return videoUrls;
   }
 
   private IList<IWebElement> WaitForElements(IWebDriver driver, By by, TimeSpan timeout)
@@ -111,8 +118,7 @@ class GogoWebScraper
       elapsed = DateTime.Now - startTime;
 
       Thread.Sleep(500); // Adjust the interval as needed
-    }
-    while (elapsed < timeout);
+    } while (elapsed < timeout);
 
     return new List<IWebElement>();
   }
