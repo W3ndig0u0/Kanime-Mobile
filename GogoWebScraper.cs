@@ -34,6 +34,8 @@ class GogoWebScraper
 
         string videoUrl = videoNode.GetAttribute("data-video");
 
+        Console.WriteLine(videoUrl);
+
         string streamingUrl = $"{videoUrl.Replace("streaming.php", "download")}";
         driver.Navigate().GoToUrl(streamingUrl);
 
