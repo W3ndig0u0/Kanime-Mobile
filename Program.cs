@@ -4,8 +4,11 @@ class Program
 {
   static void Main(string[] args)
   {
+    string id = "kimetsu-no-yaiba-katanakaji-no-sato-hen";
+    string episode = "1";
+
     GogoWebScraper scraper = new GogoWebScraper();
-    var videoUrls = scraper.StreamingUrlFinder();
+    var videoUrls = scraper.StreamingUrlFinder(id, episode);
     if (videoUrls == null)
     {
       return;
@@ -16,7 +19,7 @@ class Program
     do
     {
       Console.Write("Enter the number of the video URL to download (0 to exit): ");
-      string input = Console.ReadLine();
+      string? input = Console.ReadLine();
 
       if (int.TryParse(input, out selectedOption))
       {
@@ -36,6 +39,6 @@ class Program
 
     string selectedVideoUrl = videoUrls[selectedOption - 1];
 
-    VideoDownloader.Download(selectedVideoUrl).Wait();
+    VideoDownloader.Download(selectedVideoUrl, id).Wait();
   }
 }

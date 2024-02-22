@@ -7,13 +7,11 @@ using System.Threading;
 
 class GogoWebScraper
 {
-  public List<string> StreamingUrlFinder()
+  public List<string> StreamingUrlFinder(string id, string episode)
   {
     List<string> videoUrls = new List<string>();
 
     string baseUrl = "https://gogoanime.hu/";
-    string id = "kimetsu-no-yaiba-katanakaji-no-sato-hen";
-    string episode = "1";
 
     string episodeUrl = $"{baseUrl}{id}-episode-{episode}";
 

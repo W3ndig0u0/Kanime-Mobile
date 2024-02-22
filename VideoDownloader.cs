@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 class VideoDownloader
 {
-  public static async Task Download(string url)
+  public static async Task Download(string url, string id)
   {
     using (HttpClient client = new HttpClient())
     {
-      string id = "kimetsu-no-yaiba-katanakaji-no-sato-hen";
       string episode = "1";
 
       string fileName = $"{id}-episode-{episode}.mp4";
